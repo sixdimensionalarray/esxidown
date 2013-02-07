@@ -1,6 +1,5 @@
 #!/bin/sh
 # ESXi 5.1 host automated shutdown script
-# reads file shutdownlist for server IDs to shutdown
 
 # these are the VM IDs to shutdown in the order specified
 # use the SSH shell, run "vim-cmd vmsvc/getallvms" to get ID numbers
