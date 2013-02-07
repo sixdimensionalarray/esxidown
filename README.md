@@ -3,7 +3,7 @@ ESXi Auto Shutdown Script v1.0
 
 This script can be used to help shut down virtual machines, for example, in the case of a power outage.
 
-Deploy the two scripts on an ESXi 5.1 (or greater) attached datastore.  Make sure they are executable (chmod +x) by root.
+Deploy the two scripts on an ESXi 5.1 (or greater) attached datastore.  Make sure they are executable (chmod +x) by the user who will be running the script.
 
 Get the VM IDs using vim-cmd vmsvc/getallvms and customize the esxidown.sh script.
 
