@@ -42,6 +42,12 @@ validate_shutdown()
     fi
 }
 
+# enter maintenance mode immediately
+echo "Entering maintenance mode..."
+if [ $TEST -eq 0 ]; then
+    esxcli system maintenanceMode set -e true -t 0
+fi
+
 # read each line as a server ID and shutdown/poweroff
 for SRVID in $SERVERIDS
 do
@@ -63,12 +69,6 @@ done
 
 # guest vm shutdown complete
 echo "Guest VM shutdown complete..."
-
-# enter maintenance mode immediately
-echo "Entering maintenance mode..."
-if [ $TEST -eq 0 ]; then
-    esxcli system maintenanceMode set -e true -t 0
-fi
 
 # shutdown the ESXi host
 echo "Shutting down ESXi host after 10 seconds..."
