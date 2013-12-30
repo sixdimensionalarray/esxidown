@@ -12,10 +12,10 @@ TEST=0
 
 # script waits WAIT_TRYS times, WAIT_TIME seconds each time
 # number of times to wait for a VM to shutdown cleanly before forcing power off.
-WAIT_TRYS=5
+WAIT_TRYS=20
 
 # how long to wait in seconds each time for a VM to shutdown.
-WAIT_TIME=60
+WAIT_TIME=10
 
 # ------ DON'T CHANGE BELOW THIS LINE ------
 
