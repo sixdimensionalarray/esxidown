@@ -4,7 +4,7 @@
 # these are the VM IDs to shutdown in the order specified
 # use the SSH shell, run "vim-cmd vmsvc/getallvms" to get ID numbers
 # specify IDs separated by a space
-SERVERIDS=`vim-cmd vmsvc/getallvms | awk 'BEGIN {getline}; { print $1 }'`
+SERVERIDS=$(vim-cmd vmsvc/getallvms | sed -e '1d' -e 's/ \[.*$//' | awk '$1 ~ /^[0-9]+$/ {print $1}')
 
 # New variable to allow script testing, assuming the vim commands all work to issue shutdowns
 # can be "0" or "1"
