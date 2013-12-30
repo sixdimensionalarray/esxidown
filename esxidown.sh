@@ -45,7 +45,7 @@ validate_shutdown()
 # enter maintenance mode immediately
 echo "Entering maintenance mode..."
 if [ $TEST -eq 0 ]; then
-    esxcli system maintenanceMode set -e true -t 0
+    esxcli system maintenanceMode set -e true -t 0 &
 fi
 
 # read each line as a server ID and shutdown/poweroff
