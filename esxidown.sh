@@ -21,7 +21,7 @@ WAIT_TIME=10
 
 validate_shutdown()
 {
-    vim-cmd vmsvc/power.getstate $SRVID | grep -i "off" > /dev/null 2<&1
+    vim-cmd vmsvc/power.getstate $SRVID | grep -i "off\|Suspended" > /dev/null 2<&1
     STATUS=$?
 
     if [ $STATUS -ne 0 ]; then
