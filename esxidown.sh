@@ -4,7 +4,7 @@
 # these are the VM IDs to shutdown in the order specified
 # use the SSH shell, run "vim-cmd vmsvc/getallvms" to get ID numbers
 # specify IDs separated by a space
-SERVERIDS=`vim-cmd vmsvc/getallvms | awk 'BEGIN {getline}; { print $1 }'`
+SERVERIDS=$(vim-cmd vmsvc/getallvms | sed -e '1d' -e 's/ \[.*$//' | awk '$1 ~ /^[0-9]+$/ {print $1}')
 
 # New variable to allow script testing, assuming the vim commands all work to issue shutdowns
 # can be "0" or "1"
@@ -12,10 +12,10 @@ TEST=0
 
 # script waits WAIT_TRYS times, WAIT_TIME seconds each time
 # number of times to wait for a VM to shutdown cleanly before forcing power off.
-WAIT_TRYS=5
+WAIT_TRYS=20
 
 # how long to wait in seconds each time for a VM to shutdown.
-WAIT_TIME=60
+WAIT_TIME=10
 
 # ------ DON'T CHANGE BELOW THIS LINE ------
 
@@ -42,12 +42,18 @@ validate_shutdown()
     fi
 }
 
+# enter maintenance mode immediately
+echo "Entering maintenance mode..."
+if [ $TEST -eq 0 ]; then
+    esxcli system maintenanceMode set -e true -t 0 &
+fi
+
 # read each line as a server ID and shutdown/poweroff
 for SRVID in $SERVERIDS
 do
     TRY=0
 
-    vim-cmd vmsvc/power.getstate $SRVID | grep -i "off" > /dev/null 2<&1
+    vim-cmd vmsvc/power.getstate $SRVID | grep -i "off\|Suspended" > /dev/null 2<&1
     STATUS=$?
 
     if [ $STATUS -ne 0 ]; then
@@ -63,12 +69,6 @@ done
 
 # guest vm shutdown complete
 echo "Guest VM shutdown complete..."
-
-# enter maintenance mode immediately
-echo "Entering maintenance mode..."
-if [ $TEST -eq 0 ]; then
-    esxcli system maintenanceMode set -e true -t 0
-fi
 
 # shutdown the ESXi host
 echo "Shutting down ESXi host after 10 seconds..."
