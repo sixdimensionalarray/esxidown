@@ -1,10 +1,10 @@
 ESXi Auto Shutdown Script v1.0b
-Tested on ESXi 5.1 (free)
+Tested on ESXi 5.1 through 5.5 (free)
 -------------------------
 
 This script can be used to help shut down virtual machines, for example, in the case of a power outage.
 
-Deploy the two scripts on an ESXi 5.1 (or greater) attached datastore.  Make sure they are executable (chmod +x) by the user who will be running the script.
+Deploy the two scripts on an ESXi 5.1 (or greater) attached datastore.  The scripts are known to work up to ESXi 5.5, and may work on future versions also.  Make sure they are executable (chmod +x) by the user who will be running the script.
 
 By default, the script tries to shut down all guest VMs automatically, and waits 5 times for a duration of 60 seconds each time for each VM to shut down.  These settings are customizable in the script.
 
